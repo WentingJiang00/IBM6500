@@ -1,0 +1,82 @@
+---
+title: "M02-Introduction to Data Science in R-Reflection"
+author: "Wenting Jiang"
+date: "2026-09-09"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 4
+    toc-expand: true
+    number-sections: false
+    embed-resources: true
+    code-fold: true
+    code-overflow: wrap
+    code-tools: true
+
+---
+
+
+# Reproducible Data Science and Literate Coding
+
+## Prompt 1
+
+**Summarize new things you learned in this module about reproducible data science and literate coding**
+
+-   **Literate Coding:** Integrating code, execution outputs, and explanatory text into a single document (e.g., Jupyter Notebooks or Quarto) so the analysis is readable and easy to follow as a narrative.
+
+-   **Reproducible Data Science:** Structuring code, data, and software environments so that anyone can run the workflow and achieve the exact same results.
+
+# Reflection on Quarto 
+
+## Prompt 2
+
+**Summarize the instructor's lecture about Quarto that you found impressive. Do you see yourself using Quarto every day for your job or study, like taking notes in your class or preparing a presentation? More eye-catching effects will be introduced in later modules.**
+
+In the lecture, I was particularly impressed by a **Quarto** report combines research questions, data processing code, methods, charts, and conclusions in one place. Readers can see both the final visuals and the exact code used to create them, while re-rendering the document automatically updates the entire report whenever the data changes. I'd love to use **Quarto** regularly in my graduate studies and daily work. It’s definitely a powerful tool for building presentations and analyzing data.
+
+::: callout-note
+**Key Takeaway:** Quarto streamlines collaborative data science by combining code and narrative into a single reproducible environment.
+:::
+
+# Reproducibility Crisis
+
+## Prompt 3
+
+**Summarize the video presentation about reproducibility crisis. What do you think about reproducible crisis in your field? How can Quarto help address the concerns you have about reproducibility in the line of your work?**
+
+> "Reproducible data science requires integrating code, data, and execution outputs into a single transparent workflow."
+
+*Reproducibility crisis* which originated in the early 2010s, denotes that findings in behavioral science often cannot be replicated: Researchers do not obtain results comparable to the original, peer-reviewed study when repeating that study using similar procedures.A reproducibility crisis in digital marketing occurs when tests, experiments, and consumer research findings cannot be repeated with the same results **Quarto** helps solve this by combining raw data, processing code, and narrative into a single automated workflow. Anyone can re-run the file to generate identical reports, ensuring total transparency and consistency in my work.
+
+# The Tidyverse Ecosystem
+
+## Prompt 4
+
+**Summarize what you learned in this module about the Tidyverse ecosystem in R. What can you do with R?**\
+The Tidyverse is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. With R, I can clean and reshape messy data to prepare it for analysis using `tidyr` and `dplyr`; create visualizations and custom plots with `ggplot2`; and perform statistical modeling and data analysis efficiently using `stats` and `tidymodels`.
+
+# Two Additional R Packages
+
+## Prompt 5
+
+**Refer to the video introducing two 20 packages. Among the various packages introduced, choose two packages beyond the Tidyverse ecosystem, base R, and Quarto that could enhance your job/career. Tell me why you think so.**
+
+Beyond the Tidyverse, base R, and Quarto, **plotly** and **patchwork** would greatly enhance my career by taking data visualization to the next level:
+
+| Package     | Category      | Primary Function             |
+|:------------|:--------------|:-----------------------------|
+| `plotly`    | Visualization | Interactive HTML graphics    |
+| `patchwork` | Layout        | Multi-panel plot composition |
+
+1.  **plotly**: It transforms static `ggplot2` charts into interactive visuals with just one command (`ggplotly()`). This lets clients hover over data points and zoom in to explore marketing metrics easily.
+
+2.  **patchwork**: It makes combining multiple charts into one clean layout effortless using simple math operators like `+` and `/`. This helps me present related marketing visuals side-by-side in professional reports.
+
+# R versus Python
+
+## Prompt 6
+
+**Refer to the debate on R vs. Python. What is your take on this debate? In your response, consider how Quarto enables people using R and Python in the same team to still collaborate, as illustrated in the Video you watched in a few modules ahead: "Mine Çetinkaya-Rundel & Julia Stewart Lowndes \| Hello Quarto: Share, Collaborate, Teach, Reimagine"**
+
+In the end, this workflow produces reports in a clean, unified format. The speakers also shared how Duke University uses Quarto in teaching—not just as a replacement for Word or PowerPoint, but as a way to reshape how we create reports, lab manuals, and research websites. Therefore, the more important question is not which language should replace the other, but how a team can choose the appropriate tool for each task and communicate the results effectively.
