@@ -1,0 +1,123 @@
+---
+title: "W06-Reflection Essay-Introduction to Positron"
+author: "Wenting Jiang"
+date: "Sep,13 2026"
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: false
+    code-link: true
+    embed-resources: true
+editor: visual
+execute:
+  freeze: auto
+---
+
+# 1. Installation and Familiarization with Positron
+
+## Prompt 1
+
+> Download and install Positron. As you watch the videos in Step 1 and Step 3, follow the activities in the videos and become familiar with Positron.
+
+## Response
+
+I downloaded and installed Positron by following the instructions in the video. I learned that Positron is an *integrated development environment (IDE)* designed for data science.
+
+Positron supports:
+
+-   R
+
+-   Python
+
+-   Writing and running code
+
+-   Viewing and exploring data
+
+-   Creating visualizations
+
+-   Using an AI assistant
+
+I also learned about Positron’s main interface areas. The **Activity Bar** and **sidebars** provide access to files, AI tools, variables, plots, and help. The **Editor** is used to write code, while the **Panel** contains the Console and Terminal. I can also press **Command + Shift + P** to open the **Command Palette** and quickly search for commands and settings.
+
+# 2. Positron Compared with RStudio
+
+## Prompt 2
+
+> Based on what you learned from Step 1 and Step 3, what do you like about Positron compared with RStudio?
+
+## Response
+
+I think of it as combining RStudio’s data analysis capabilities with VS Code’s interface and extension support. Many of Positron’s basic functions are similar to those in RStudio, but its interface looks and feels more like VS Code.
+
+What I like most about Positron is its **built-in AI feature**. The AI Assistant can help me write and understand code, find mistakes, and suggest ways to fix them without leaving Positron. It can also look at my project, data, and Console, so its answers are more helpful for what I am working on. For example, I can ask it to filter a dataset and find the specific categories or information I need.
+
+# 3. Using AI Inside Positron
+
+## 1. Various Ways to Use AI
+
+### Prompt 3
+
+> Describe the various ways you can use AI inside Positron. Some are free while others are not.
+
+### Response
+
+AI in Positron can help me write and explain code, identify errors, filter data, and create visualizations. *GitHub Copilot* offers a limited free plan, and verified students can receive additional Copilot features for free through GitHub Education. Other providers, such as OpenAI and Anthropic, may require an API key and charge based on usage.
+
+| AI Option | Free or Paid | Description |
+|----|----|----|
+| GitHub Copilot Free | Free with limits | Provides limited code suggestions and AI requests. |
+| GitHub Copilot Student | Free for verified students | Provides additional Copilot features through GitHub Education. |
+| Local models | Free | Models such as Ollama run locally but require computer resources. |
+| OpenAI | Usually paid | Requires an API key and charges based on usage. |
+| Anthropic | Usually paid | Requires an API key and charges based on usage. |
+| Posit AI Pass | May require payment | Provides access to multiple AI models through a Posit account. |
+
+## 2. AI Tools I Set Up
+
+### Prompt
+
+> Which AI tools have you installed or set up? Which AI tools did you find beneficial for you?
+
+### Response
+
+Recently,I connected **GitHub Copilot** to Positron as my AI provider. It's really saves time. It can generate code, explain unfamiliar commands, and suggest ways to fix errors without requiring me to leave Positron.
+
+## 3. GitHub Copilot Education
+
+### Prompt
+
+> Apply for GitHub Copilot through an education account and take a screenshot showing that you were accepted into the education program.
+
+### Response
+
+I was accepted into *GitHub Education* and received access to GitHub Copilot’s student benefits.
+
+![](Screenshot%20.png)
+
+## My Experience with GitHub Copilot
+
+### Prompt
+
+> Play with GitHub Copilot. Do you find it helpful or distracting? Please elaborate.
+
+### Response
+
+I find GitHub Copilot *very useful* because it is easy to use and saves me a lot of time. It provides suggestions while I work, helps me understand code, and allows me to find and fix errors more quickly. Overall, it makes coding more efficient and convenient.
+
+::: callout-note
+## Reflection
+
+With the help of GitHub Copilot, I created a sample coffee sales dataset and a bar chart in Positron. The **Data Explorer** allowed me to view, sort, and filter the data by selecting conditions, such as sales greater than 100. I could also view the datasets in the Variables pane and see the chart in the Plots pane. This activity showed me how Copilot and Positron can make data analysis easier and faster.
+:::
+
+# 4. Publishing the Report
+
+## Prompt 4
+
+> Publish this report to GitHub Pages. Note that although both GitHub Pages and the GitHub repository are online, they are different. GitHub Pages is a website publishing service that hosts the rendered HTML from a QMD file.
+
+# 5. Appendix
+
+-   [GitHub Repository](PASTE-YOUR-GITHUB-REPOSITORY-URL-HERE)
+-   [GitHub Pages Website](PASTE-YOUR-GITHUB-PAGES-URL-HERE)
