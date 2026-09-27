@@ -1,0 +1,137 @@
+---
+title: "M05 - Visualizing Data with Tables for MSDM CEP"
+author: "Wenting Jiang"
+date: "2026-09-26"
+format:
+  html:
+    toc: true
+    code-fold: true
+    embed-resources: true
+    theme: cosmo
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# Introduction
+
+This report summarizes what I learned about creating tables in R using the
+`gt` and `gtExtras` packages. These packages make it possible to create
+professional and informative tables for reports and presentations.
+
+# Reflection on the Videos
+
+## 1. What did you learn from the videos?
+
+I learned how to create and customize tables in R using the `gt` package.
+The basic process starts with a data frame and the `gt()` function. After
+creating the table, I can add titles, subtitles, column labels, source notes,
+footnotes, colors, borders, and different number formats.
+
+I also learned that the `gtExtras` package can add small visual elements,
+such as bar charts, directly inside a table. This makes the table more
+informative than a simple display of numbers.
+
+## 2. What did you like about the `gt` and `gtExtras` packages?
+
+I love using gt and gtExtras because you can build gorgeous, high-quality tables with almost no code. gt makes formatting effortless, and gtExtras adds nice visual touches like mini bar charts. Best of all, because everything is automated, the table updates by itself whenever the data changes,saving time compared to making tables manually in Word or PowerPoint.
+
+## 3. How do tables complement other forms of data visualization?
+
+Tables show exact values, while charts are better for quickly showing trends
+and comparisons. A table can provide detailed information that may not be
+visible in a bar chart or line chart.Using a table with small charts combines both advantages. Readers can see the exact numbers and also understand the general pattern visually.
+
+## 4. When would you prefer tables instead of charts?
+
+I would prefer tables when readers need to see exact values, compare several
+categories, or examine detailed information. Tables are also useful when
+there are many variables or when the differences between values are small.
+I would prefer charts when the main goal is to show a trend, pattern, or
+large difference quickly.
+
+# Pizza Sales Table
+
+The following table uses the built-in `pizzaplace` dataset. It summarizes
+pizza orders by pizza type and includes descriptive statistics.
+
+```{r}
+library(dplyr)
+library(gt)
+library(gtExtras)
+library(scales)
+
+pizza_summary <- pizzaplace |>
+  group_by(name) |>
+  summarise(
+    total_pizzas = n(),
+    average_price = mean(price, na.rm = TRUE),
+    total_revenue = sum(price, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+pizza_summary |>
+  gt() |>
+  tab_header(
+    title = "Pizza Sales Summary",
+    subtitle = "Descriptive Statistics by Pizza Type"
+  ) |>
+  cols_label(
+    name = "Pizza Type",
+    total_pizzas = "Total Pizzas Sold",
+    average_price = "Average Price",
+    total_revenue = "Total Revenue"
+  ) |>
+  fmt_number(
+    columns = total_pizzas,
+    decimals = 0
+  ) |>
+  fmt_currency(
+    columns = c(average_price, total_revenue),
+    currency = "USD",
+    decimals = 2
+  ) |>
+   gt_plt_bar(
+  column = total_pizzas,
+  keep_column = TRUE
+) |>
+cols_label(
+  total_pizzas = "Sales Chart"
+) |>
+tab_spanner(
+  label = "Sales Metrics",
+  columns = c(total_pizzas, average_price, total_revenue)
+) |>
+tab_footnote(
+  footnote = "Total revenue is calculated by summing the price of each pizza sold.",
+  locations = cells_column_labels(columns = total_revenue)
+) |>
+data_color(
+  columns = total_revenue,
+  colors = scales::col_numeric(
+    palette = c("#E8F1FB", "#1976D2"),
+    domain = NULL
+  )
+) |>
+  gt::tab_source_note(
+    source_note = "Source: pizzaplace dataset"
+  )
+```
+
+
+# Connection to the MSDM CEP Project
+
+This table is useful for the MSDM CEP project because it presents descriptive
+statistics in a clear and organized format. It allows readers to compare
+pizza types based on the number of pizzas sold, average price, and total
+revenue.
+
+The table combines exact numerical values with small bar charts. The numbers
+provide detailed information, while the bar charts make it easier to identify
+which pizza types have higher or lower sales. This format can help project
+members communicate findings to clients and stakeholders.
+
+A table like this would be useful in a written report or presentation because
+it summarizes important information in one place and makes the results easier
+to understand.
