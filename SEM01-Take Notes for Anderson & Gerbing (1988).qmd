@@ -1,0 +1,235 @@
+---
+title: "Article Notes: The Two-Step Approach to Structural Equation Modeling"
+author: "Wenting Jiang"
+date: Oct 1,2026
+format:
+  html:
+    toc: true
+    number-sections: true
+    embed-resources: true
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+# Introduction
+
+Anderson and Gerbing (1988) explain how researchers can use SEM to test theories and study the relationships between different concepts.
+The main idea of the article is the two-step approach.
+First, researchers check if the measurement model is working well.
+Then, they test the structural model to see how the concepts are related.
+
+The reason for separating these steps is because measurement problems and relationship problems are not always the same.
+If the measures are not working good, the results about the relationships can also be confusing.
+So, researchers should first check the measures before explaining the results from the structural model.
+
+# Background
+
+SEM uses ideas from factor analysis and regression or path analysis.
+A latent construct is something that researchers cannot see or measure directly, so they use several observed indicators to measure it.
+For example, Salesforce adoption can be measured by looking at if employees log in, update records, document their activities, and follow the CRM process.
+
+The measurement model looks at how the indicators measure the latent constructs.
+The structural model looks at how the different constructs are related based on the theory.
+These two parts are connected, but they are used for answer different questions.
+
+# Exploratory Versus Confirmatory Analyses
+
+Exploratory analysis is used when the researcher is not sure how many factors are in the data.
+It helps researchers look for possible patterns.
+Confirmatory analysis starts with a model that is already based on theory.
+The researcher then checks if the data support this model.
+
+The article says exploratory and confirmatory analysis are not always completely separate.
+A researcher can start with a theory, find some problems, and make a few changes.
+But if the researcher changes the model many times using the same data, the result may fit only that sample.
+It is better to test the final model with another sample if this is possible.
+
+This is important because a model can look good just because it was changed many times for the current data.
+A new sample can help researchers know if the model also works for the larger population.
+
+# Complementary Approaches for Theory Testing Versus Predictive Application
+
+The authors explain that SEM can be used for different purposes.
+One purpose is testing and developing theories.
+Another purpose is predicting outcomes.
+These purposes can require different methods.
+
+For theory testing, full-information methods such as maximum likelihood (ML) and generalized least squares (GLS) can be useful.
+These methods include measurement error and give information about the overall model fit.
+PLS can be useful when the researcher mainly cares about prediction and explaining variance.
+
+The authors do not say one method is always the best.
+The method should depend on what the research is trying to do.
+ML is more connected with theory testing, while PLS can be useful for prediction when the theory is not very developed.
+
+# Estimation Methods
+
+Maximum likelihood is one important method in SEM.
+When its assumptions are reasonable, ML can give consistent and efficient estimates.
+It also allows researchers to test individual parameters and the overall model fit.
+
+The article also talks about problems when the data is not normally distributed.
+Non-normal data can affect standard errors and chi-square tests.
+The parameter estimates may still be okay sometimes, but the fit tests can be less reliable.
+
+Because of this, researchers need to think about their data before choosing an estimation method.
+Estimation is not only a computer option.
+It can affect the conclusions of the study, especially when the sample is small or the data has unusual distribution.
+
+# Confirmatory Measurement Model
+
+The confirmatory measurement model explains which observed indicators belong to each latent construct.
+At this stage, the constructs can be related to each other, but the researcher is not yet testing the main directional paths in the theory.
+
+The measurement model helps researchers check construct validity.
+A good model should have useful indicators, acceptable fit, and a meaning that makes sense.
+The authors prefer using several indicators for each construct because one indicator cannot show much about measurement error.
+
+For example, Salesforce adoption could include several indicators, such as login frequency, record updates, and documentation timeliness.
+These indicators should measure the same general adoption idea instead of being unrelated work behaviors.
+
+# Need for Unidimensional Measurement
+
+Unidimensionality means that a group of indicators mainly measures one construct.
+If the items are supposed to measure one construct but actually measure several different ideas, the meaning of the construct becomes unclear.
+
+Internal consistency looks at how indicators within the same construct are related.
+External consistency looks at how the construct behaves with other constructs.
+Both ideas are useful for understanding if the measurement is working.
+
+For example, items for Salesforce adoption should be connected to CRM usage.
+They should not also include job satisfaction or general computer skill unless the theory says these ideas belong together.
+Otherwise, the construct may not have a clear meaning.
+
+# Specification
+
+Model specification means deciding which indicators measure which constructs and which relationships should be included.
+These decisions should come from theory, past research, and the meaning of the questions.
+Researchers should not choose paths only because they make the model fit better.
+
+The article recommends multiple indicators, but it also discusses single indicators and constructs with only two indicators.
+These situations can make the model harder to estimate.
+Researchers need to check if the model is identified and if there is enough information to estimate it.
+
+Correlated measurement errors should also be used carefully.
+Sometimes two errors may be related because the questions have similar wording or use the same method.
+But researchers should not add correlated errors only because the fit becomes better.
+There should be a reasonable explanation for the change.
+
+# Assessment of Fit
+
+After estimating the measurement model, researchers need to see if it fits the data.
+The article discusses chi-square, fit indexes, residuals, and model comparisons.
+
+Chi-square is useful, but it can be affected by the sample size.
+In a large sample, even a small difference between the model and the data can become significant.
+Because of this, researchers should not use chi-square alone.
+They should also look at other fit information, residuals, sample size, and the theory behind the model.
+
+Convergent validity is supported when indicators for the same construct have strong relationships.
+Discriminant validity means that different constructs are not measuring the exact same thing.
+These checks should happen before the researcher explains the structural paths.
+
+# Respecification
+
+Sometimes the first measurement model does not fit well.
+Researchers may need to respecify it by removing a weak indicator, correcting an indicator assignment, or adding a relationship that has a clear theory reason.
+
+The authors warn that respecification should not become a search for the best number only.
+If researchers make many changes without a theory reason, the final model may fit the current sample but not work with another sample.
+
+Improper solutions are another problem.
+For example, an error variance may become negative or an estimate may have an unreasonable value.
+This can happen because of sampling problems, weak indicators, or incorrect model specification.
+Researchers should investigate the reason instead of just ignoring it.
+
+# One-Step Versus Two-Step Modeling Approaches
+
+In a one-step approach, the measurement model and structural model are estimated together.
+This can save some time, but it is harder to know where the problem comes from when the model fit is poor.
+
+In the two-step approach, researchers first estimate and evaluate the measurement model.
+After the measurement model is acceptable, they estimate the structural model.
+This makes it easier to separate a problem with the indicators from a problem with the theory.
+
+The two-step approach also helps reduce interpretational confounding.
+This problem happens when the meaning of a construct changes depending on which structural model is being tested.
+By checking the measurement model first, the researcher can understand the constructs more clearly.
+
+# The Confirmatory Structural Model
+
+The structural model shows the expected relationships among the latent constructs.
+It can include predictor constructs and outcome constructs.
+The model is based on the theory that the researcher wants to test.
+
+The structural model should be interpreted only after the measurement model has acceptable fit and validity.
+If the indicators do not measure the constructs correctly, a significant path can be misleading.
+Also, a good model fit does not prove that the theory is completely true.
+
+Researchers need to be careful about causal language.
+If the data is cross-sectional and correlational, it cannot by itself prove that one construct causes another construct.
+Other factors may explain the relationship too.
+
+# Recommended Two-Step Modeling Approach
+
+The article's process can be summarized in these steps:
+
+1\.
+Make a measurement model based on the theory and past research.
+
+2\.
+Check if the indicators are measuring the constructs in a good way.
+
+3.
+Make changes only when there is a clear reason for it.
+
+4\.
+After that, test and compare the structural models.
+
+The authors also discuss nested models and chi-square difference tests.
+These tests help researchers compare the structural models.
+The models should still make sense with the theory, not only fit the data.
+
+# Advantages of the Two-Step Approach
+
+-   It helps separate measurement problems from structural problems.
+
+-    It shows if the indicators are measuring the constructs in a good way.
+
+-   It makes it easier to compare different theory models.
+
+# Additional Considerations in Structural Model Interpretation
+
+Researchers should not treat SEM results as automatic proof of causality.
+A significant path can be consistent with a causal theory, but correlation by itself does not prove cause and effect.
+
+Researchers should also think about other possible explanations and alternative models.
+One model can fit the data, but another model may fit it too.
+The preferred model should be supported by theory, measurement quality, and comparison with other reasonable models.
+
+For a Salesforce adoption project, a relationship between Salesforce usage and data quality should not immediately be called a causal relationship.
+Employee role, training, manager support, and workflow differences could also affect the results.
+These possible factors should be considered in the analysis.
+
+# Conclusion
+
+The main contribution of this article is giving researchers a practical way to use SEM more carefully.
+Researchers should first check if their constructs are measured in a valid and clear way.
+After that, they can test the relationships between the constructs.
+
+The two-step approach makes it easier to understand where a model problem may come from.
+It also makes the conclusions more believable.
+The most important lesson for me is that measurement should be checked before researchers explain the structural relationships.
+
+# References
+
+Anderson, James C., and David W. Gerbing.
+1988.
+“Structural Equation Modeling in Practice: A Review and Recommended Two-Step Approach.” *Psychological Bulletin* 103 (3): 411–423.
+https://doi.org/10.1037/0033-2909.103.3.411.
+
+# Appendix
+
+-   \[GitHub repository\]
+-   \[GitHub Pages\]
