@@ -1,0 +1,184 @@
+---
+title: "M06 Reflection: Revealjs and Advanced Data Wrangling"
+author: "Wenting Jiang"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    number-sections: false
+    code-link: true
+    embed-resources: true
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+---
+
+## Introduction
+
+This reflection discusses my experience creating a Revealjs presentation with Quarto and practicing advanced data wrangling in R. My presentation focused on AO4 of the CVRx CEP project: evaluating the effectiveness of a targeted field engagement intervention by measuring changes in meaningful Salesforce adoption, data quality, and user perceptions before and after implementation, with comparison-group analysis when feasible.
+
+> The main idea of my project is to examine, design, pilot, and measure a Salesforce engagement campaign.
+
+## My Revealjs Presentation
+
+[View My Revealjs Presentation](https://wentingjiang00.github.io/IBM6500/cep-ao4-presentation.html#/title-slide)
+
+### Presentation Topic
+
+My presentation was titled **“Evaluating a Salesforce Field Engagement Intervention.”** It focused on how CVRx could test whether a targeted engagement campaign improves Salesforce use among field users.
+
+The proposed workflow was:
+
+1.  Establish baseline measures.
+2.  Use barriers from AO2 and user segments from AO3 to design the campaign.
+3.  Select a pilot group and provide support for at least eight weeks.
+4.  Compare results before and after the campaign.
+5.  Use a comparison group when operationally feasible.
+
+Possible campaign activities included short training sessions, workflow demonstrations, role-specific messages, manager support, and follow-up reminders. The final responsibility for training would need to be confirmed with CVRx. Possible owners could include department managers, HR, a Salesforce administrator, or another designated business owner.
+
+### My Impression of Revealjs
+
+Revealjs is a way to create presentation slides as an HTML document using Quarto. Instead of building every slide manually in PowerPoint, I use headings and Markdown in a `.qmd` file. Quarto then converts the file into an interactive web presentation.
+
+I found Revealjs useful because the presentation is reproducible. If I change the text, chart, or code, I can render the presentation again and create an updated version. It also supports slide transitions, speaker notes, tables, code, hyperlinks, a table of contents, and interactive navigation.
+
+### Revealjs Compared with PowerPoint
+
+| Feature | Revealjs with Quarto | PowerPoint |
+|------------------------|------------------------|------------------------|
+| Main format | Reproducible HTML file | Slide file edited visually |
+| Coding and charts | Easy to include code and regenerate results | Usually requires manual chart updates |
+| Reproducibility | Strong because content and code stay together | More difficult to reproduce exactly |
+| Design | Requires Markdown and YAML knowledge | Easier for drag-and-drop design |
+| Sharing | Easy to publish as a webpage | Often shared as PPTX or PDF |
+| Learning curve | Higher at the beginning | More familiar for most users |
+
+Revealjs is especially useful for analytical projects because the narrative, code, and output can be kept together. PowerPoint is more convenient when I need highly customized visual formatting quickly.
+
+### What I Learned
+
+I learned that a good presentation is not just a collection of information. It should have a clear story. In my presentation, the story moves from the Salesforce adoption problem to the AO4 objective, the proposed campaign, the evaluation measures, and the decision CVRx could make after the pilot.
+
+I also learned that presentation code must be checked carefully. A small error in the YAML header can prevent the file from rendering. I learned to keep the YAML structure organized, use only one `format` key, and check that the output is readable after rendering.
+
+## Reproducible Example from the Project
+
+The following chart uses illustrative values only. These numbers are not actual CVRx results. They show how a future analysis could compare meaningful Salesforce adoption before and after an eight-week pilot.
+
+```{r}
+#| label: fig-adoption-reflection
+#| fig-cap: "Illustrative change in meaningful Salesforce adoption"
+#| fig-width: 7
+#| fig-height: 4.5
+
+period <- c("Baseline", "After 8 weeks")
+adoption <- c(52, 68)
+
+barplot(
+  adoption,
+  names.arg = period,
+  col = c("#9ecae1", "#2171b5"),
+  ylim = c(0, 100),
+  ylab = "Meaningful adoption (%)",
+  main = "Illustrative Salesforce Adoption Change"
+)
+
+text(
+  x = c(0.7, 1.9),
+  y = adoption + 5,
+  labels = paste0(adoption, "%")
+)
+```
+
+Figure @fig-adoption-reflection shows a possible increase from 52% at baseline to 68% after the pilot. In the real project, this chart would be generated from actual Salesforce measures. The campaign should not be judged only by login frequency. The analysis should also examine data completeness, documentation timeliness, workflow consistency, and user feedback.
+
+## Advanced Data Wrangling in R
+
+The examples below use small fictional datasets. They demonstrate the functions without using confidential CVRx or Salesforce data.
+
+### 1. `left_join()`: Combining Related Tables
+
+`left_join()` is useful when information is stored in separate relational tables. It keeps every row from the first table and adds matching columns from the second table.
+
+```{r}
+library(dplyr)
+
+users <- tibble(
+  user_id = c(1, 2, 3),
+  segment = c("High barrier", "Moderate barrier", "Low barrier")
+)
+
+activity <- tibble(
+  user_id = c(1, 2, 3),
+  records_updated = c(8, 14, 20)
+)
+
+joined_users <- users %>%
+  left_join(activity, by = "user_id")
+
+joined_users
+```
+
+The result combines the user segment information with Salesforce activity information. In a real project, this could connect a user-segment table with a CRM activity table.
+
+### 2. `mutate()`: Creating a New Variable
+
+`mutate()` is used to create a new variable or modify an existing variable. It is useful when raw data needs to be transformed into an analysis measure.
+
+```{r}
+activity_scores <- tibble(
+  user_id = c(1, 2, 3),
+  required_records = c(10, 20, 25),
+  completed_records = c(8, 14, 20)
+)
+
+activity_scores %>%
+  mutate(completion_rate = completed_records / required_records)
+```
+
+The new `completion_rate` variable shows the percentage of required records completed by each user. This is more informative than looking only at the number of completed records because users may have different workloads.
+
+### 3. `summarise()`: Creating a Group-Level Summary
+
+`summary()` or `summarise()` is used to reduce many rows into a summary value. It is often combined with `group_by()` to compare user segments.
+
+```{r}
+segment_scores <- tibble(
+  segment = c("Pilot", "Pilot", "Comparison", "Comparison"),
+  completion_rate = c(0.80, 0.70, 0.60, 0.65)
+)
+
+segment_scores %>%
+  group_by(segment) %>%
+  summarise(
+    average_completion = mean(completion_rate),
+    users = n()
+  )
+```
+
+The result provides one row for each group. In the actual evaluation, this type of summary could compare the average data-completion rate for the pilot group and the comparison group.
+
+## Reflection on Advanced Wrangling
+
+The three functions show different stages of analysis. `left_join()` connects related information, `mutate()` creates a useful measure, and `summarise()` produces a group-level result. Together, they show how raw tables can become evidence for a business question.
+
+The most challenging idea was understanding that the structure of the data affects the analysis. A user table, activity table, and survey table may contain different types of information. Before calculating results, I need to understand the key connecting variables and make sure that joins do not duplicate records.
+
+The advanced wrangling material is relevant to AO4 because the evaluation may require combining Salesforce activity data with user segments, baseline measures, post-intervention measures, and employee feedback. These functions would help organize the data before comparing the pilot and comparison groups.
+
+## Conclusion
+
+Creating the Revealjs presentation helped me understand how Quarto can combine a clear narrative with reproducible analysis. Advanced data wrangling helped me understand how multiple tables can be connected, transformed, and summarized.
+
+For my AO4 project, the next important steps would be to confirm the campaign owner, define the baseline measures, identify the pilot group, and determine whether a comparison group is feasible. The final evaluation should support a practical decision about whether CVRx should continue, modify, or expand the Salesforce engagement campaign.
+
+## References and Links
+
+-   Course materials on Quarto, Revealjs, and advanced data wrangling.
+-   Course materials on research design, descriptive research, and causal research.
+-   CEP project materials on Salesforce adoption and field engagement.
