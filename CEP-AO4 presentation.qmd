@@ -1,0 +1,222 @@
+---
+title: "Evaluating a Salesforce Field Engagement Intervention"
+subtitle: "CEP Project Presentation"
+author: "Wenting Jiang"
+institute: "IBM 6500/6200, Cal Poly Pomona"
+date: today
+format:
+  revealjs:
+    theme: simple
+    width: 1600
+    height: 900
+    transition: slide
+    slide-number: true
+    toc-depth: 1
+    smaller: true
+    scrollable: true
+    code-fold: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+## Table of Contents
+
+- Introduction
+- Literature and project rationale
+- Methods
+- Illustrative analysis
+- Conclusion and references
+
+::: {.notes}
+This presentation explains how the CEP team could evaluate a targeted Salesforce engagement intervention.
+:::
+
+# Introduction
+
+## Problem Statement
+
+Salesforce adoption may vary across field users. Some users may enter information consistently, while others may use the system only when required.
+
+Inconsistent adoption can create problems with:
+
+- Data completeness
+- Documentation timeliness
+- Workflow consistency
+- Visibility into field activity
+
+::: {.notes}
+The problem is not simply whether employees have access to Salesforce. The larger issue is whether they use it consistently and meaningfully in their daily work.
+:::
+
+## Analytics Objective
+
+> Evaluate whether a targeted field engagement intervention improves meaningful Salesforce adoption, data quality, and user perceptions.
+
+The evaluation will compare outcomes before and after the intervention. A comparison group will be used when operationally feasible.
+
+## Why This Matters
+
+Better Salesforce adoption can help the organization:
+
+- Make field activity more visible
+- Improve the quality of CRM records
+- Identify workflow barriers
+- Support more consistent decision-making
+
+The results can show whether the intervention is useful and which parts should be improved.
+
+# Literature and Project Rationale
+
+## Meaningful Technology Adoption
+
+Technology adoption is more than simply having access to a system. Meaningful adoption includes repeated use, complete records, timely documentation, and behavior that supports the intended workflow.
+
+For this project, Salesforce adoption will be treated as a multidimensional outcome rather than one single login measure.
+
+## Evaluation Logic
+
+The project follows a simple evaluation logic:
+
+1. Establish a baseline.
+2. Deliver a targeted engagement intervention.
+3. Measure adoption and perceptions again.
+4. Compare the change over time.
+
+This design connects the intervention to measurable behavioral and attitudinal outcomes.
+
+## Research Gap and Project Contribution
+
+A basic usage count may not explain whether Salesforce is being used effectively. This project adds value by combining:
+
+- Behavioral CRM indicators
+- Data-quality indicators
+- User perceptions and barriers
+- Before-and-after comparison
+
+# Methods
+
+## Data and Sampling
+
+The project will use field users who work with Salesforce.
+
+Potential data sources include:
+
+- Salesforce activity records
+- Record-completeness checks
+- Documentation timestamps
+- A short user survey or interview
+
+Users may be divided into a pilot group receiving the intervention and a comparison group when feasible.
+
+## Intervention Plan
+
+The intervention may include:
+
+- A short Salesforce training session
+- A workflow demonstration
+- Examples of complete and useful records
+- A quick-reference guide
+- Follow-up reminders or check-ins
+
+The intervention should address barriers identified during the baseline assessment.
+
+## Measures
+
+| Outcome | Example measure | Expected direction |
+|---|---|---|
+| Platform engagement | Relevant Salesforce activity or usage frequency | Increase |
+| Data completeness | Percentage of required fields completed | Increase |
+| Documentation timeliness | Time between activity and documentation | Improve |
+| Workflow consistency | Percentage of records following the expected process | Increase |
+| User perception | Confidence and perceived usefulness survey scores | Increase |
+
+## Analysis Plan
+
+The analysis will compare:
+
+- Baseline versus post-intervention results
+- Pilot group versus comparison group, when available
+- Changes across different user segments
+- Behavioral outcomes and user perceptions
+
+Possible statistics include means, percentages, change scores, and simple pre/post comparisons.
+
+# Illustrative Analysis
+
+## Reproducible Example
+
+The following example uses illustrative planning data. It is not presented as actual company results.
+
+```{r}
+#| label: fig-adoption-change
+#| fig-cap: "Illustrative change in meaningful Salesforce adoption"
+#| fig-width: 8
+#| fig-height: 4.5
+
+period <- c("Baseline", "Post-intervention")
+adoption <- c(52, 68)
+
+barplot(
+  adoption,
+  names.arg = period,
+  col = c("#9ecae1", "#2171b5"),
+  ylim = c(0, 100),
+  ylab = "Meaningful adoption (%)",
+  main = "Illustrative Pre/Post Comparison"
+)
+text(
+  x = c(0.7, 1.9),
+  y = adoption + 5,
+  labels = paste0(adoption, "%")
+)
+```
+
+## Interpreting the Example
+
+In this illustrative example, meaningful adoption increases from 52% to 68% after the intervention.
+
+The actual project should only interpret the intervention as effective after checking:
+
+- Whether the change is consistent across users
+- Whether the comparison group changed differently
+- Whether data quality also improved
+- Whether user perceptions support the behavioral findings
+
+## Limitations
+
+- The intervention may not be randomly assigned.
+- Users may differ in role, experience, or workload.
+- A short follow-up period may not show long-term adoption.
+- CRM records may not capture every type of user behavior.
+- Survey responses may be affected by social desirability.
+
+# Conclusion
+
+## Key Takeaways
+
+- Salesforce adoption should be measured using multiple indicators.
+- The intervention should respond to documented user barriers.
+- A baseline and post-intervention comparison can show whether outcomes changed.
+- A comparison group strengthens the evaluation when it is operationally possible.
+- Behavioral and perception data should be interpreted together.
+
+## Expected Contribution
+
+This project can help the CEP team determine whether targeted field engagement improves Salesforce use in a meaningful way.
+
+The results can also guide future training, workflow design, and internal communication.
+
+## References
+
+- Malhotra, N. K. *Marketing Research: An Applied Orientation*. Course materials on research design, surveys, observation, and experimentation.
+- Course materials: *Ch03 - Research Design*.
+- Course materials: *Ch07 - Descriptive Research Design: Survey and Observation*.
+- Course materials: *Ch08 - Causal Research Design: Experimentation*.
+- CEP project proposal and team workflow materials.
+
+
+::: {.notes}
+The links provide access to the published portfolio and the GitHub repository containing the project files.
+:::
