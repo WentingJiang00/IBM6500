@@ -1,0 +1,80 @@
+---
+title: "M11 Article Reading Note: Mediator and Moderator"
+author: "Wenting Jiang"
+date: today
+format:
+  html:
+    theme: default
+    toc: true
+    toc-depth: 2
+    embed-resources: true
+editor: visual
+---
+
+# Article information
+
+Baron, R. M., and Kenny, D. A. (1986). *The Moderator–Mediator Variable Distinction in Social Psychological Research: Conceptual, Strategic, and Statistical Considerations*. Journal of Personality and Social Psychology, 51(6), 1173–1182. <https://doi.org/10.1037/0022-3514.51.6.1173>
+
+# Main purpose of the article
+
+The main purpose of this article is to explain the difference between a moderator and a mediator. These two ideas are sometimes mixed together, but they answer different questions. A moderator is about **when or for whom** a relationship changes. A mediator is about **how or why** one variable affects another variable.
+
+# Moderator
+
+A moderator changes the strength or direction of the relationship between an independent variable and a dependent variable. It can be a categorical variable, such as a group, or a continuous variable, such as age.
+
+The basic regression idea is `Y = b0 + b1X + b2W + b3(XW) + e`.
+
+Here, `W` is the moderator. The important part is the interaction term `XW`. If the interaction is significant, the effect of `X` on `Y` is different at different values of `W`.
+
+One example could be the relationship between work stress and job satisfaction. Social support may be a moderator. Work stress may have a stronger negative relationship with satisfaction when social support is low.
+
+# Mediator
+
+A mediator explains the process between an independent variable and a dependent variable. The simple model is `X → M → Y`.
+
+In this model, `X` affects the mediator `M`, and then `M` affects `Y`. The article describes several regression steps:
+
+1.  Show that `X` is related to `Y` (path `c`).
+2.  Show that `X` is related to `M` (path `a`).
+3.  Show that `M` is related to `Y` while controlling for `X` (path `b`).
+4.  Check whether the effect of `X` on `Y` becomes smaller after adding `M` (path `c'`).
+
+If the effect becomes smaller, there is evidence of mediation. If it becomes close to zero, the article calls it complete mediation. If the effect is reduced but still remains, it can be partial mediation.
+
+For example, employee training may improve job performance because it increases employee confidence. Confidence is the mediator because it describes one possible process.
+
+# Main difference
+
+| Question | Moderator | Mediator |
+|------------------------|------------------------|------------------------|
+| Main meaning | Changes a relationship | Explains a relationship |
+| Common question | When or for whom? | How or why? |
+| Main statistical idea | Interaction term | Indirect path through `M` |
+| Position in model | Usually outside the causal path | Between `X` and `Y` |
+
+The same variable could possibly be a moderator in one study and a mediator in another study. It depends on the research theory and where the variable is placed in the model.
+
+# Important points I noted
+
+-   The theory should come before choosing the statistical test.
+-   A significant correlation by itself does not prove mediation.
+-   Moderator analysis normally needs an interaction term.
+-   Mediation separates the total effect into a direct part and an indirect part.
+-   Measurement error can make the relationships harder to detect.
+-   A cross-sectional model may show a statistical pattern, but it does not automatically prove the causal order.
+
+# What I learned
+
+Before reading this article, I mainly thought moderator and mediator were just extra variables in a regression. Now I understand that their roles are different. A moderator tells us that an effect is not the same in every situation. A mediator gives a possible explanation for why an effect happens.
+
+I still think partial and complete mediation can be confusing, especially when the direct effect changes only a little. I would need to look at the paths, research design, and theory instead of making the decision from only one p-value.
+
+# Short conclusion
+
+This article gives a basic framework for testing moderation and mediation with regression. The most useful idea for me is to first decide whether the research question is asking about a changing effect or an explaining process. After that, the model and statistical steps are easier to select.
+
+# Appendix
+
+-   GitHub Repo:
+-   GitHub Pages:
