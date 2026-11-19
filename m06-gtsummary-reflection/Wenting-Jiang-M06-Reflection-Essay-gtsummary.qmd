@@ -1,0 +1,378 @@
+---
+title: "Summary Tables with gtsummary"
+subtitle: "Reflection and Applied Analysis of CVRx CEP Data"
+author: "Wenting Jiang"
+institute: "IBM 6500, Cal Poly Pomona"
+date: today
+format:
+  revealjs:
+    theme: serif
+    width: 1600
+    height: 900
+    footer: "M06 Reflection | gtsummary"
+    transition: slide
+    transition-speed: default
+    incremental: false
+    toc: true
+    toc-depth: 1
+    slide-number: true
+    scrollable: true
+    smaller: true
+    code-fold: false
+    code-overflow: wrap
+    number-sections: false
+    number-depth: 5
+    embed-resources: true
+    css: styles.css
+editor: visual
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+.libPaths(c("../../work/r-lib", .libPaths()))
+
+library(dplyr)
+library(forcats)
+library(gt)
+library(gtsummary)
+library(scales)
+
+options(gtsummary.theme = NULL)
+theme_gtsummary_compact()
+
+cvrx_raw <- read.csv("cvrx-opportunities.csv", check.names = TRUE)
+
+cvrx <- cvrx_raw |>
+  transmute(
+    Opportunity_Status = factor(OPP_STATUS),
+    Qualified = factor(isQualified., levels = c(0, 1), labels = c("Not qualified", "Qualified")),
+    CPAS = factor(hasCPAS., levels = c(0, 1), labels = c("No", "Yes")),
+    Patient = factor(hasPatient., levels = c(0, 1), labels = c("No", "Yes")),
+    Related_Procedure = factor(hasRelatedProcedure., levels = c(0, 1), labels = c("No", "Yes")),
+    Coverage_Type = factor(COVERAGE_TYPE),
+    Record_Type = factor(RECORD_TYPE),
+    Sales = SALES,
+    Log_Sales = log1p(SALES)
+  )
+
+cross_counts <- table(cvrx$Opportunity_Status, cvrx$Qualified)
+chi_result <- suppressWarnings(chisq.test(cross_counts))
+cramers_v <- sqrt(unname(chi_result$statistic) /
+                    (sum(cross_counts) * min(nrow(cross_counts) - 1, ncol(cross_counts) - 1)))
+
+sales_model <- lm(
+  Log_Sales ~ Opportunity_Status + Qualified + CPAS + Patient +
+    Related_Procedure + Coverage_Type + Record_Type,
+  data = cvrx
+)
+
+reg_table <- sales_model |>
+  tbl_regression(
+    label = list(
+      Opportunity_Status ~ "Opportunity status",
+      Qualified ~ "Qualification",
+      CPAS ~ "CPAS recorded",
+      Patient ~ "Patient recorded",
+      Related_Procedure ~ "Related procedure",
+      Coverage_Type ~ "Coverage type",
+      Record_Type ~ "Record type"
+    ),
+    intercept = FALSE,
+    estimate_fun = label_style_sigfig(digits = 3),
+    pvalue_fun = label_style_pvalue(digits = 3)
+  ) |>
+  add_global_p() |>
+  bold_p(t = 0.05) |>
+  bold_labels()
+```
+
+# Assignment Roadmap {background-color="#173f5f"}
+
+::::::: columns
+:::: {.column width="52%"}
+## Four prompts
+
+::: incremental
+-   Summarize `{gtsummary}` capabilities and value.
+-   Compare `{gtsummary}` with `{gt}` and `{gtExtras}`.
+-   Identify three new lessons from Dr. Daniel Sjoberg.
+-   Apply cross-tabulation and multiple regression to CVRx CEP data.
+:::
+::::
+
+:::: {.column width="44%"}
+::: callout-note
+## Evidence used
+
+-   Course Step 1 lecture and lecture note
+-   Dr. Sjoberg's Step 2 presentation
+-   CVRx Opportunity data: **21,604 records**
+-   Reproducible R code and `{gtsummary}` output
+:::
+::::
+:::::::
+
+::: notes
+This presentation follows the assignment prompts in order, then applies the package to our CVRx CEP project.
+:::
+
+## Prompt 1: What can `{gtsummary}` do?
+
+> **Prompt:** In Step 1, summarize the package's capabilities as explained by the speaker. How may `{gtsummary}` benefit your school work or career?
+
+-   `tbl_summary()` produces descriptive summaries for continuous, categorical, and dichotomous variables.
+-   `tbl_cross()` presents cross-tabulations, while `add_p()` and `add_difference()` add inferential results.
+-   `tbl_regression()` translates fitted models into publication-ready coefficient tables.
+-   Survey, ANCOVA, univariate, logistic, and ordinary least-squares results can follow a consistent reporting style.
+-   Formatting verbs modify labels, headers, statistics, digits, captions, bolding, and footnotes.
+-   Tables can be merged, stacked, converted to `{gt}`, and placed directly in Quarto output.
+
+The important advantage is not only appearance. The table remains connected to the data, statistical model, and code, making the workflow more reproducible (Sjoberg et al., 2021).
+
+::: aside
+Step 1 emphasized sensible defaults plus extensive customization.
+:::
+
+## Prompt 1: Value for school and career
+
+::::: columns
+::: {.column width="48%"}
+### School work
+
+-   Faster descriptive and hypothesis-testing tables
+-   Consistent APA-style reporting across assignments
+-   Less manual copying from R output
+-   Easier revisions when data or models change
+-   A transparent link between code and conclusions
+:::
+
+::: {.column width="48%"}
+### Career use
+
+-   Executive-ready summaries for CRM and marketing analytics
+-   Standardized reporting across projects and analysts
+-   Easier quality control and peer review
+-   Reusable table code for recurring dashboards and reports
+-   Outputs suitable for HTML, Word, RTF, and LaTeX
+:::
+:::::
+
+::: {.fragment .highlight-box}
+For my CVRx work, `{gtsummary}` can turn Salesforce records and model results into tables that technical and nontechnical stakeholders can read without interpreting raw R output.
+:::
+
+# Prompt 2.1: How is it different?
+
+> **Prompt:** How does `{gtsummary}` differ from `{gt}` and `{gtExtras}`?
+
+| Package | Primary role | What it contributes |
+|----|----|----|
+| **gtsummary** | Statistical summarization | Understands variable types and model objects; computes descriptive statistics, tests, and regression summaries |
+| **gt** | General table rendering | Builds and styles display tables from data frames; controls headers, spanners, footnotes, colors, and export |
+| **gtExtras** | Extensions for `{gt}` | Adds visual embellishments and convenience helpers such as plots, bars, themes, and images inside `{gt}` tables |
+
+::: fragment
+**Relationship:** `{gtsummary}` decides *what statistical results to report*; `{gt}` and `{gtExtras}` help decide *how the final display should look*.
+:::
+
+::: notes
+The packages overlap in presentation but solve different levels of the workflow. gtsummary is analysis-aware; gt is a lower-level display system.
+:::
+
+# Prompt 2.2: Three new lessons
+
+> **Prompt:** Give three things learned from Dr. Sjoberg that were not explained in the Step 1 lecture.
+
+::: incremental
+1.  **Reproducibility was a design motivation.** Manual table editing is not merely slow; it separates the reported result from the code and can introduce errors.
+2.  **Statistics can be reported inline.** `inline_text()` can pull a value from a `{gtsummary}` object into a sentence, so narrative results update with the table.
+3.  **The print engine is flexible.** A `{gtsummary}` object can be converted to `{gt}`, `{flextable}`, `{huxtable}`, or other engines depending on the destination format.
+:::
+
+These ideas changed how I view a table: it is not the last cosmetic step but a reproducible analytical object that can support both the visual display and the written interpretation.
+
+# Prompt 3: Cross-tabulation question
+
+> **Prompt:** Choose two appropriate CEP variables for cross-tabulation, test whether they are associated, show the code and table, and interpret the result.
+
+## Research question
+
+**Is Opportunity status associated with whether an Opportunity is qualified?**
+
+-   `Opportunity_Status`: CANCELLED, CLOSED, or OPEN
+-   `Qualified`: Not qualified or Qualified
+-   Both variables are categorical, so Pearson's chi-square test of independence is appropriate.
+
+::: fragment
+**Null hypothesis:** Opportunity status and qualification are independent.
+
+**Alternative hypothesis:** The variables are associated.
+:::
+
+# Prompt 3: Cross-tabulation code {.smaller}
+
+```{r}
+#| label: tbl-cross-status-qualified
+#| output: false
+
+cross_table <- cvrx |>
+  select(Opportunity_Status, Qualified) |>
+  tbl_cross(
+    row = Opportunity_Status,
+    col = Qualified,
+    percent = "row",
+    margin = "row"
+  ) |>
+  add_p(test = "chisq.test") |>
+  modify_header(label = "**Opportunity status**") |>
+  modify_caption("**CVRx Opportunity Status and Qualification**") |>
+  bold_labels()
+```
+
+# Prompt 3: Cross-tabulation result {.smaller}
+
+```{r}
+#| label: tbl-cross-status-qualified-output
+#| tbl-cap: "Opportunity Status by Qualification"
+#| echo: false
+
+cross_table |>
+  as_gt() |>
+  tab_options(
+    table.font.size = px(20),
+    data_row.padding = px(3)
+  )
+```
+
+## Prompt 3: Interpretation
+
+::::: columns
+::: {.column width="54%"}
+### Statistical decision
+
+The test was statistically significant, $\chi^2$(2) = `r round(unname(chi_result$statistic), 1)`, *p* \< .001. Therefore, I reject the null hypothesis of independence.
+
+Cramér's V was `r round(cramers_v, 3)`, indicating a meaningful association rather than a trivial difference produced only by the large sample.
+:::
+
+::: {.column width="42%"}
+### Business pattern
+
+-   **Closed:** `r percent(cross_counts["CLOSED", "Qualified"] / sum(cross_counts["CLOSED", ]), accuracy = 0.1)` qualified
+-   **Open:** `r percent(cross_counts["OPEN", "Qualified"] / sum(cross_counts["OPEN", ]), accuracy = 0.1)` qualified
+-   **Cancelled:** `r percent(cross_counts["CANCELLED", "Qualified"] / sum(cross_counts["CANCELLED", ]), accuracy = 0.1)` qualified
+:::
+:::::
+
+::: {.fragment .highlight-box}
+Qualification is much more common among closed Opportunities and much less common among cancelled Opportunities. This supports using qualification completeness as an operational data-quality indicator.
+:::
+
+# Prompt 4: Multiple-regression question
+
+> **Prompt:** Using the MSDM CEP data, run multiple regression, produce the table, and interpret the result.
+
+## Model specification
+
+The continuous dependent variable is `log(1 + Sales)`. The log transformation reduces the influence of the strongly skewed dollar values and retains zero sales.
+
+The predictors are:
+
+::: incremental
+-   Opportunity status
+-   Qualification status
+-   CPAS, patient, and related-procedure completion flags
+-   Coverage type
+-   Record type
+:::
+
+This is an observational model; coefficients describe conditional associations and should not be interpreted as causal effects.
+
+# Prompt 4: Model code {.smaller}
+
+```{r}
+#| label: regression-model-code
+#| output: false
+
+sales_model <- lm(
+  Log_Sales ~ Opportunity_Status + Qualified + CPAS + Patient +
+    Related_Procedure + Coverage_Type + Record_Type,
+  data = cvrx
+)
+```
+
+# Prompt 4: Regression table {.smaller}
+
+```{r}
+#| label: regression-table
+#| tbl-cap: "Multiple Regression Predicting log(1 + Sales)"
+#| echo: false
+
+reg_table |>
+  as_gt() |>
+  tab_header(
+    title = md("**Multiple Regression Predicting log(1 + Sales)**"),
+    subtitle = md(paste0(
+      "N = ", nobs(sales_model),
+      "; Adjusted R² = ", round(summary(sales_model)$adj.r.squared, 3)
+    ))
+  ) |>
+  tab_options(
+    table.font.size = px(17),
+    data_row.padding = px(1),
+    heading.padding = px(2)
+  )
+```
+
+## Prompt 4: Regression interpretation
+
+::::: columns
+::: {.column width="49%"}
+### Overall model
+
+-   *N* = `r nobs(sales_model)` complete records
+-   Adjusted $R^2$ = `r round(summary(sales_model)$adj.r.squared, 3)`
+-   Overall *F* test: *p* \< .001
+-   The predictors explain a modest portion of sales variation.
+
+### Selected findings
+
+-   Qualification has a positive adjusted association with log sales (*p* \< .001).
+-   Opportunity status and coverage type are significant as groups.
+-   CPAS completion is not significant after controlling for the other variables.
+:::
+
+::: {.column width="47%"}
+### Cautions
+
+-   `r comma(sum(is.na(cvrx$Sales)))` records have missing sales and are excluded listwise.
+-   Sales may reflect projected as well as realized business value.
+-   Negative coefficients for some completeness flags may reflect workflow timing or coding practices.
+-   The model supports prediction and association, not intervention causality.
+:::
+:::::
+
+::: {.fragment .highlight-box}
+The small adjusted $R^2$ shows that CRM fields alone do not capture most variation in sales. This reinforces the CEP recommendation to combine operational records with role, tenure, engagement, and survey measures.
+:::
+
+# What I learned
+
+-   Good analytical tables begin with a clear research question and correct test, not with styling.
+-   `{gtsummary}` reduces the distance between analysis, presentation, and narrative interpretation.
+-   Defaults provide a fast first draft, while explicit labels, tests, digits, and themes create professional output.
+-   A statistically significant result can still have limited practical value; effect size, missingness, and model fit must be reported.
+-   For CVRx, qualification is strongly associated with Opportunity status, but the regression also shows that the available fields explain only a small share of sales variation.
+
+::: notes
+The strongest benefit for me is repeatability: I can rerun the same report when CVRx provides updated Opportunity records, and the tables and narrative statistics update together.
+:::
+
+# Appendix
